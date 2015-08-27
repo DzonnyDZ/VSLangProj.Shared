@@ -17,8 +17,8 @@
     <ProjectGuid>{E93E20E5-23FD-4C2C-B8B5-1388EB46D1D9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Dzonny.ILProj</RootNamespace>
-    <AssemblyName>Dzonny.ILProj</AssemblyName>
+    <RootNamespace>Dzonny.VSLangProj</RootNamespace>
+    <AssemblyName>Dzonny.VSLangProj.Shared</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SignAssembly>true</SignAssembly>
@@ -182,6 +182,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomProjectSystemInstaller.cs" />
+    <Compile Include="CommandLineTask.cs" />
     <Compile Include="VsPackage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="..\GlobalAssemblyInfo.cs">

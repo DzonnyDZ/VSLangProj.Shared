@@ -12,47 +12,44 @@ PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 using System;
 using System.ComponentModel;
 using System.Linq;
-using System.Runtime.InteropServices;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Task = System.Threading.Tasks.Task;
 
-namespace Dzonny.ILProj
+namespace Dzonny.VSLangProj
 {
 
-    /// <summary>This class implements the package exposed by this assembly.</summary>
-    /// <remarks>
-    /// This package is required if you want to define adds custom commands (ctmenu)
-    /// or localized resources for the strings that appear in the New Project and Open Project dialogs.
-    /// Creating project extensions or project types does not actually require a VSPackage.
-    /// </remarks>
-    [PackageRegistration(UseManagedResourcesOnly = true)]
-    [Description("CIL project system")]
-    [Guid(PackageGuid)]
+    /// <summary>Base class for Visual Studio packages</summary>
     [ProvideAutoLoad(UIContextGuids80.SolutionExists)]
     [ProvideAutoLoad(UIContextGuids80.NoSolution)]
-    public sealed class VsPackage : Package
+    public abstract class VsPackageBase : Package
     {
-        /// <summary>Type initializer - initializes the class <see cref="VsPackage"/></summary>
-        static VsPackage()
+
+        /// <summary>CTor - creates a new instance of the <see cref="VsPackageBase"/> class</summary>
+        /// <param name="cpsName">Name of custom project system</param>
+        /// <exception cref="ArgumentNullException"><paramref name="cpsName"/> is null</exception>
+        /// <exception cref="ArgumentException"><paramref name="cpsName"/> is an empty string</exception>
+        protected VsPackageBase(string cpsName)
         {
-            deploymentException = EnsureCustomProjectSystem();
+            if (cpsName == null) throw new ArgumentException(nameof(cpsName));
+            if (cpsName == string.Empty) throw new ArgumentException("Value cannot be an empty string", nameof(cpsName));
+            deploymentException = EnsureCustomProjectSystem(cpsName);
         }
 
         /// <summary>In case deployment of custom project system failed, contains the exception</summary>
-        private static readonly Exception deploymentException;
+        private readonly Exception deploymentException;
 
         /// <summary>Called when the VSPackage is loaded by Visual Studio.</summary>
         protected override void Initialize()
         {
             if (deploymentException != null)
-                OnInit();
+                WriteError();
         }
 
-        /// <summary>In case theer was error deployng local custom project system, reports the issue to user assynchronously</summary>
+        /// <summary>In case there was error deployng local custom project system, reports the issue to user assynchronously</summary>
         /// <returns>Task to await the async operation</returns>
-        private async Task OnInit()
+        protected virtual async Task WriteError()
         {
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
             IVsOutputWindow outputWindow = GetService(typeof(SVsOutputWindow)) as IVsOutputWindow;
@@ -71,12 +68,18 @@ namespace Dzonny.ILProj
         }
 
         /// <summary>Ensures that up-to-date version for custom project system is installed</summary>
-        private static Exception EnsureCustomProjectSystem()
+        /// <param name="cpsName">Name of custom project system</param>
+        /// <returns>In case exception occurs during inituialization returns the exception, ontherwise null</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="cpsName"/> is null</exception>
+        /// <exception cref="ArgumentException"><paramref name="cpsName"/> is an empty string</exception>
+        protected virtual Exception EnsureCustomProjectSystem(string cpsName)
         {
+            if (cpsName == null) throw new ArgumentException(nameof(cpsName));
+            if (cpsName == string.Empty) throw new ArgumentException("Value cannot be an empty string", nameof(cpsName));
+            var installer = new CustomProjectSystemInstaller(GetType(), cpsName);
             try
             {
-                if (CustomProjectSystemInstaller.NeedsDeployment())
-                    CustomProjectSystemInstaller.Deploy();
+                if (installer.NeedsDeployment()) installer.Deploy();
             }
             catch (Exception ex)
             {

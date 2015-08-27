@@ -3,16 +3,35 @@ using System.IO.Compression;
 using System.Security;
 using IO = System.IO;
 
-namespace Dzonny.ILProj
+namespace Dzonny.VSLangProj
 {
     /// <summary>Handles installation of custom project sytem</summary>
-    internal static class CustomProjectSystemInstaller
+    public class CustomProjectSystemInstaller
     {
+        /// <summary>VSPackage type</summary>
+        private readonly Type packageType;
+        /// <summary>Name of custom project system</summary>
+        private readonly string cpsName;
+
+        /// <summary>CTor - creates a new insatcne of the <see cref="CustomProjectSystemInstaller"/> class</summary>
+        /// <param name="packageType">Type representing VsPackage type</param>
+        /// <param name="cpsName">Name of custom project system</param>
+        /// <exception cref="ArgumentNullException"><paramref name="packageType"/> or <paramref name="cpsName"/> is null</exception>
+        /// <example cref="ArgumentException"><paramref name="cpsName"/> is an empty string</example>
+        public CustomProjectSystemInstaller(Type packageType, string cpsName)
+        {
+            if (packageType == null) throw new ArgumentNullException(nameof(packageType));
+            if (cpsName == null) throw new ArgumentNullException(nameof(cpsName));
+            if (cpsName == string.Empty) throw new ArgumentException("Value cannot be empty string", nameof(cpsName));
+            this.packageType = packageType;
+            this.cpsName = cpsName;
+        }
+
         /// <summary>Gets path where custom project system is supposed to be installed</summary>
-        private static string LocalCustomProjectSystemPath => IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "CustomProjectSystems", "ILProj");
+        private string LocalCustomProjectSystemPath => IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "CustomProjectSystems", cpsName);
 
         /// <summary>Gets path where packed custom project system is saved and can be installed from</summary>
-        private static string ZippedCustomProjectSystemPath => IO.Path.Combine(IO.Path.GetDirectoryName(typeof(CustomProjectSystemInstaller).Assembly.Location), "CustomBuildSystem.zip");
+        private string ZippedCustomProjectSystemPath => IO.Path.Combine(IO.Path.GetDirectoryName(packageType.Assembly.Location), "CustomBuildSystem.zip");
 
         /// <summary>Determines if it is necessary to install custom project file system locally</summary>
         /// <returns>True if custom project system is not installed locally or if it has to be upgraded; false if locally installed custom project system is up to date.</returns>
@@ -40,7 +59,7 @@ namespace Dzonny.ILProj
         /// <exception cref="OverflowException">
         ///     At least one component in version text stored in "version.txt" entry of ZIP file containing zipped custom project system represents a number that is greater than <see cref="Int32.MaxValue"/>.
         /// </exception>
-        public static bool NeedsDeployment()
+        public  bool NeedsDeployment()
         {
             if (!IO.Directory.Exists(LocalCustomProjectSystemPath)) return true;
             using (var z = new ZippedCustomProjectSystem(ZippedCustomProjectSystemPath))
@@ -59,7 +78,7 @@ namespace Dzonny.ILProj
         }
 
         /// <summary>Deploys custom project system locally from zipped archive</summary>
-        public static void Deploy()
+        public  void Deploy()
         {
             using (var zipped = new ZippedCustomProjectSystem(ZippedCustomProjectSystemPath))
             {
