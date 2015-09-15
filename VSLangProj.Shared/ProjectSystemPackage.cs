@@ -12,14 +12,14 @@ namespace Dzonny.VSLangProj
     /// <summary>Base class for Visual Studio packages</summary>
     [ProvideAutoLoad(UIContextGuids80.SolutionExists)]
     [ProvideAutoLoad(UIContextGuids80.NoSolution)]
-    public abstract class VsPackageBase : Package
+    public abstract class ProjectSystemPackage : Package
     {
 
-        /// <summary>CTor - creates a new instance of the <see cref="VsPackageBase"/> class</summary>
+        /// <summary>CTor - creates a new instance of the <see cref="ProjectSystemPackage"/> class</summary>
         /// <param name="cpsName">Name of custom project system</param>
         /// <exception cref="ArgumentNullException"><paramref name="cpsName"/> is null</exception>
         /// <exception cref="ArgumentException"><paramref name="cpsName"/> is an empty string</exception>
-        protected VsPackageBase(string cpsName)
+        protected ProjectSystemPackage(string cpsName)
         {
             if (cpsName == null) throw new ArgumentException(nameof(cpsName));
             if (cpsName == string.Empty) throw new ArgumentException("Value cannot be an empty string", nameof(cpsName));
