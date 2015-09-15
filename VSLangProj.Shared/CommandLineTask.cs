@@ -7,10 +7,10 @@ namespace Dzonny.VSLangProj
     /// <summary>Base MSBuild task that executes a command line</summary>
     public abstract class CommandLineTask : Task
     {
-        /// <summary>When overriden in derived class gets path to EXE file to launch</summary>
+        /// <summary>When overridden in derived class gets path to EXE file to launch</summary>
         protected abstract string Exe { get; }
 
-        /// <summary>When overriden in derived class gets command line for the process</summary>
+        /// <summary>When overridden in derived class gets command line for the process</summary>
         /// <returns>Command line arguments</returns>
         protected abstract string GetCommandLine();
 
@@ -19,9 +19,9 @@ namespace Dzonny.VSLangProj
         /// <remarks>This implementation always reports the message as error</remarks>
         protected void OnConsoleError(string text) { Log.LogError(text); }
 
-        /// <summary>Processes standard oputput message of program being executed</summary>
+        /// <summary>Processes standard output message of program being executed</summary>
         /// <param name="text">The message</param>
-        /// <remarks>This implementation, if the message contains substring "error" reports it as error, if it contains substring "waening" reports it as a warning, otherwise as message.</remarks>
+        /// <remarks>This implementation, if the message contains substring "error" reports it as error, if it contains substring "warning" reports it as a warning, otherwise as message.</remarks>
         protected void OnConsoleOutput(string text)
         {
             if (text.IndexOf("error", StringComparison.InvariantCultureIgnoreCase) >= 0)

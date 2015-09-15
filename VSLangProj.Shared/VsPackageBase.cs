@@ -1,15 +1,4 @@
-﻿/***************************************************************************
-
-Copyright (c) Microsoft Corporation. All rights reserved.
-This code is licensed under the Visual Studio SDK license terms.
-THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
-ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY
-IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
-PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
-
-***************************************************************************/
-
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Linq;
 using Microsoft.VisualStudio;
@@ -47,7 +36,7 @@ namespace Dzonny.VSLangProj
                 WriteError();
         }
 
-        /// <summary>In case there was error deployng local custom project system, reports the issue to user assynchronously</summary>
+        /// <summary>In case there was error deploying local custom project system, reports the issue to user asynchronously</summary>
         /// <returns>Task to await the async operation</returns>
         protected virtual async Task WriteError()
         {
@@ -69,7 +58,7 @@ namespace Dzonny.VSLangProj
 
         /// <summary>Ensures that up-to-date version for custom project system is installed</summary>
         /// <param name="cpsName">Name of custom project system</param>
-        /// <returns>In case exception occurs during inituialization returns the exception, ontherwise null</returns>
+        /// <returns>In case exception occurs during initialization returns the exception, otherwise null</returns>
         /// <exception cref="ArgumentNullException"><paramref name="cpsName"/> is null</exception>
         /// <exception cref="ArgumentException"><paramref name="cpsName"/> is an empty string</exception>
         protected virtual Exception EnsureCustomProjectSystem(string cpsName)
@@ -87,17 +76,5 @@ namespace Dzonny.VSLangProj
             }
             return null;
         }
-
-        /// <summary>The GUID for this package.</summary>
-        public const string PackageGuid = "b584f11e-5e77-40e8-bbfd-f70b550504bb";
-
-        /// <summary>The GUID for this project type.  It is unique with the project file extension and appears under the VS registry hive's Projects key.</summary>
-        public const string ProjectTypeGuid = "e452ebf3-3bbb-4a96-b835-ae6ecaeab85a";
-
-        /// <summary>The file extension of this project type.  No preceding period.</summary>
-        public const string ProjectExtension = "ilproj";
-
-        /// <summary>The default namespace this project compiles with, so that manifest resource names can be calculated for embedded resources.</summary>
-        internal const string DefaultNamespace = "Dzonny.ILProj";
     }
 }

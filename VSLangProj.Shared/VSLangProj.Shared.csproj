@@ -22,8 +22,7 @@
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>
-    </AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>VSLangProj.Shared.snk</AssemblyOriginatorKeyFile>
     <StartAction>Program</StartAction>
     <StartProgram>$(MSBuildProgramFiles32)\Microsoft Visual Studio 14.0\Common7\IDE\devenv.exe</StartProgram>
     <StartArguments>/rootSuffix Exp</StartArguments>
@@ -160,17 +159,6 @@
     <Reference Include="VSLangProj, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\JScript.NET\JScript.NET.ProjectTemplate\JScript.NET.ProjectTemplate.csproj">
-      <Project>{c5fb8941-f7ae-4eb7-b948-b070822b5593}</Project>
-      <Name>ILProj.ProjectTemplate</Name>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\..\JScript.NET\JScript.NET.Tasks\JScript.NET.Tasks.csproj">
-      <Project>{3DC58AB3-F67C-4481-A981-5E8A194118AE}</Project>
-      <Name>ILProj.Tasks</Name>
-    </ProjectReference>
-  </ItemGroup>
   <!-- 
   Resources for our new project system
   -->
@@ -183,7 +171,7 @@
   <ItemGroup>
     <Compile Include="CustomProjectSystemInstaller.cs" />
     <Compile Include="CommandLineTask.cs" />
-    <Compile Include="VsPackage.cs" />
+    <Compile Include="VsPackageBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
@@ -192,6 +180,7 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="VSLangProj.Shared.snk" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\Microsoft.VisualStudio.ProjectSystem.Analyzers.14.0.50729-pre\tools\Microsoft.VisualStudio.ProjectSystem.Analyzers.dll" />
