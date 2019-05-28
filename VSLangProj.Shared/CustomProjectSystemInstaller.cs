@@ -5,7 +5,7 @@ using IO = System.IO;
 
 namespace Dzonny.VSLangProj
 {
-    /// <summary>Handles installation of custom project sytem</summary>
+    /// <summary>Handles installation of custom project system</summary>
     public class CustomProjectSystemInstaller
     {
         /// <summary>VSPackage type</summary>
@@ -13,7 +13,7 @@ namespace Dzonny.VSLangProj
         /// <summary>Name of custom project system</summary>
         private readonly string cpsName;
 
-        /// <summary>CTor - creates a new insatcne of the <see cref="CustomProjectSystemInstaller"/> class</summary>
+        /// <summary>CTor - creates a new instance of the <see cref="CustomProjectSystemInstaller"/> class</summary>
         /// <param name="packageType">Type representing VsPackage type</param>
         /// <param name="cpsName">Name of custom project system</param>
         /// <exception cref="ArgumentNullException"><paramref name="packageType"/> or <paramref name="cpsName"/> is null</exception>
@@ -36,7 +36,7 @@ namespace Dzonny.VSLangProj
         /// <summary>Determines if it is necessary to install custom project file system locally</summary>
         /// <returns>True if custom project system is not installed locally or if it has to be upgraded; false if locally installed custom project system is up to date.</returns>
         /// <exception cref="IO.FileNotFoundException">File where zipped custom project system is supposed to be stored is not found</exception>
-        /// <exception cref="IO.PathTooLongException">The path to file where zipped custom project file system is supposed to be stored exeeds system-define maximum path length.</exception>
+        /// <exception cref="IO.PathTooLongException">The path to file where zipped custom project file system is supposed to be stored exceeds system-define maximum path length.</exception>
         /// <exception cref="IO.IOException">An I/O error occurred while opening ZIP file with zipped custom project system</exception>
         /// <exception cref="UnauthorizedAccessException">
         ///     The caller does not have the required permission to access path where zipped custom project system is supposed to be stored. -or-
@@ -46,7 +46,7 @@ namespace Dzonny.VSLangProj
         /// </exception>
         /// <exception cref="IO.InvalidDataException">File where zipped custom project system is stored is corrupted (cannot be interpreted as ZIP file)</exception>
         /// <exception cref="SecurityException">The caller does not have the required permission to read version file in local custom project system</exception>
-        /// <exception cref="NotSupportedException">The ZIP archive whre zipped custom project system is stored does not support reading.</exception>
+        /// <exception cref="NotSupportedException">The ZIP archive where zipped custom project system is stored does not support reading.</exception>
         /// <exception cref="IO.InvalidDataException">
         ///     The ZIP archive where zipped custom project system is stored is corrupt, and its entries cannot be retrieved. -or-
         ///     The entry "version.txt" is either missing from the archive or is corrupt and cannot be read. -or-
@@ -94,7 +94,7 @@ namespace Dzonny.VSLangProj
     {
         /// <summary>CTor - creates a new instance of the <see cref="CustomProjectSystem"/> class</summary>
         protected CustomProjectSystem() { }
-        /// <summary>When overriden in derived class gets version of the custom project system</summary>
+        /// <summary>When overridden in derived class gets version of the custom project system</summary>
         /// <returns>Version of custom project system</returns>
         public abstract Version GetVersion();
     }
@@ -105,7 +105,7 @@ namespace Dzonny.VSLangProj
         /// <summary>Gets path of folder where the custom project system is stored</summary>
         public string Folder { get; }
 
-        /// <summary>CTor - creatses a new instance of the <see cref="LocalCustomProjectSystem"/> class</summary>
+        /// <summary>CTor - creates a new instance of the <see cref="LocalCustomProjectSystem"/> class</summary>
         /// <param name="folder">Folder where the custom project system is stored</param>
         /// <exception cref="ArgumentNullException"><paramref name="folder"/> is null</exception>
         /// <exception cref="ArgumentException"><paramref name="folder"/> is an empty string</exception>
@@ -160,10 +160,10 @@ namespace Dzonny.VSLangProj
         private readonly IO.Stream zipStream;
         /// <summary>Gets path of ZIP file containing the custom project system</summary>
         public string ZipPath { get; }
-        /// <summary>True when this object has already been diposed</summary>
+        /// <summary>True when this object has already been disposed</summary>
         private bool disposed;
 
-        /// <summary>CTor - creatse a new instance of the <see cref="ZippedCustomProjectSystem"/> class</summary>
+        /// <summary>CTor - creates a new instance of the <see cref="ZippedCustomProjectSystem"/> class</summary>
         /// <param name="zipPath">Path of ZIP file containing custom project system</param>
         /// <exception cref="ArgumentNullException"><paramref name="zipPath"/> is null</exception>
         /// <exception cref="ArgumentException">
@@ -196,7 +196,7 @@ namespace Dzonny.VSLangProj
         /// <summary>Gets version of the custom project system</summary>
         /// <returns>Version of custom project system</returns>
         /// <exception cref="ObjectDisposedException">This instance has already been disposed</exception>
-        /// <exception cref="NotSupportedException">The ZIP archive whre zipped custom project system is stored does not support reading.</exception>
+        /// <exception cref="NotSupportedException">The ZIP archive where zipped custom project system is stored does not support reading.</exception>
         /// <exception cref="IO.InvalidDataException">
         ///     The ZIP archive where zipped custom project system is stored is corrupt, and its entries cannot be retrieved. -or-
         ///     The entry "version.txt" is either missing from the archive or is corrupt and cannot be read. -or-
@@ -226,7 +226,7 @@ namespace Dzonny.VSLangProj
             }
         }
 
-        /// <summary>Extracts all files and foilders of the zipped ustom project system to given directory</summary>
+        /// <summary>Extracts all files and folders of the zipped custom project system to given directory</summary>
         /// <param name="directory">Path of directory to extract custom project system to</param>
         /// <exception cref="ArgumentNullException"><paramref name="directory"/> is null</exception>
         /// <exception cref="ArgumentException">
