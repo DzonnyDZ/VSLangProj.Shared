@@ -9,9 +9,12 @@ using Task = System.Threading.Tasks.Task;
 namespace Dzonny.VSLangProj
 {
 
-    /// <summary>Base class for Visual Studio packages</summary>
+#pragma warning disable VSSDK004, VSTHRD110, VSTHRD200, CS4014
+
+    /// <summary>Base class for Visual Studio sync-load packages</summary>
     [ProvideAutoLoad(UIContextGuids80.SolutionExists)]
     [ProvideAutoLoad(UIContextGuids80.NoSolution)]
+    [Obsolete("Use " + nameof(AsyncProjectSystemPackage) + " instead")]
     public abstract class ProjectSystemPackage : Package
     {
 
