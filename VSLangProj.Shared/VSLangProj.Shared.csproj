@@ -21,7 +21,16 @@
         <PackageReleaseNotes>v2.0.0 updates to newest version of Microsoft's libraries. No changes in code.
 v2.1.0 add support for async load packages</PackageReleaseNotes>
         <AssemblyVersion>2.1.0.0</AssemblyVersion>
-    </PropertyGroup>
+    
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+  </ItemGroup>
+
     <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
         <DocumentationFile>bin\Debug\net472\Dzonny.VSLangProj.Shared.dll.xml</DocumentationFile>
     </PropertyGroup>
